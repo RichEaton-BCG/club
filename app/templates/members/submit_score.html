@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Match Score</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/members/dashboard">Racquetball Club</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/members/rankings">Rankings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/members/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/members/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-primary text-white text-center py-4">
+        <h1>Submit Match Score</h1>
+        <p>Enter the details of your recently played match</p>
+    </header>
+
+    <section class="py-5">
+        <div class="container">
+            <form action="/members/submit_score" method="POST" class="needs-validation" novalidate>
+                <!-- Opponent Selection -->
+                <div class="mb-3">
+                    <label for="opponent" class="form-label">Opponent</label>
+                    <select class="form-select" id="opponent" name="opponent_id" required>
+                        <option value="" selected disabled>Select an opponent</option>
+                        {% for member in members %}
+                        <option value="{{ member.id }}">{{ member.username }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">Please select an opponent.</div>
+                </div>
+
+                <!-- Match Date -->
+                <div class="mb-3">
+                    <label for="matchDate" class="form-label">Match Date</label>
+                    <input type="date" class="form-control" id="matchDate" name="match_date" required>
+                    <div class="invalid-feedback">Please enter a valid match date.</div>
+                </div>
+
+                <!-- Game Scores -->
+                <h4>Game Scores</h4>
+
+                <!-- Game 1 -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="game1_player1" class="form-label">Your Score (Game 1)</label>
+                        <input type="number" class="form-control" id="game1_player1" name="game1_player1" min="0" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="game1_player2" class="form-label">Opponent's Score (Game 1)</label>
+                        <input type="number" class="form-control" id="game1_player2" name="game1_player2" min="0" required>
+                    </div>
+                </div>
+
+                <!-- Game 2 -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="game2_player1" class="form-label">Your Score (Game 2)</label>
+                        <input type="number" class="form-control" id="game2_player1" name="game2_player1" min="0" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="game2_player2" class="form-label">Opponent's Score (Game 2)</label>
+                        <input type="number" class="form-control" id="game2_player2" name="game2_player2" min="0" required>
+                    </div>
+                </div>
+
+                <!-- Game 3 (Optional, Tiebreaker) -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="game3_player1" class="form-label">Your Score (Game 3, Tiebreaker)</label>
+                        <input type="number" class="form-control" id="game3_player1" name="game3_player1" min="0">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="game3_player2" class="form-label">Opponent's Score (Game 3, Tiebreaker)</label>
+                        <input type="number" class="form-control" id="game3_player2" name="game3_player2" min="0">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-success">Submit Score</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 Racquetball Club. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Bootstrap form validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
